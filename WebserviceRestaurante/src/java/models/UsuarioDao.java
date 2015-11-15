@@ -44,5 +44,28 @@ public class UsuarioDao {
 
     }
     
+    public Usuario login(String usuario, String senha) throws SQLException {
+        String query = "SELECT * FROM Usuario WHERE usuario=? and senha=?";
+
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setString(1, usuario);
+            ptmt.setString(2, senha);
+            resultSet = ptmt.executeQuery();
+            
+            while (resultSet.next()) { 
+                Usuario user = new Usuario();
+                Pedido pedido = new Pedido();
+                user.setIdUsuario(resultSet.getInt("idUsuario"));
+                user.setNome(resultSet.getString("nome"));
+                return user;
+            }
+        } finally {
+            ptmt.close();
+        }
+        return null;
+
+    }
 }
 
