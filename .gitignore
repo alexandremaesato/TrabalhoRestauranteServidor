@@ -58,3 +58,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /WebserviceRestaurante/nbproject/private/
+/WebserviceRestaurante/build/
