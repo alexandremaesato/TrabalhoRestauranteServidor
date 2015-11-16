@@ -10,32 +10,41 @@ package models;
  * @author alexandre
  */
 public class Pedido {
-    private long id;
-    private Usuario usuario;
-    private ProdutosPedido produtosPedido;
+   private int pedidoid;
+    private int usuarioid;
+    private String status;
+    private String formapgto;
 
-    public long getId() {
-        return id;
+    public int getUsuarioid() {
+        return usuarioid;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUsuarioid(int usuarioid) {
+        this.usuarioid = usuarioid;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getPedidoid() {
+        return pedidoid;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPedidoid(int pedidoid) {
+        this.pedidoid = pedidoid;
     }
 
-    public ProdutosPedido getProdutosPedido() {
-        return produtosPedido;
+    public String getStatus() {
+        return status;
     }
 
-    public void setProdutosPedido(ProdutosPedido produtosPedido) {
-        this.produtosPedido = produtosPedido;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFormapgto() {
+        return formapgto;
+    }
+
+    public void setFormapgto(String formapgto) {
+        this.formapgto = formapgto;
     }
     
 }
