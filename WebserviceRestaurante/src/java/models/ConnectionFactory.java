@@ -32,7 +32,7 @@ public class ConnectionFactory {
         Connection connection = null;
         try {
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/restaurante?useUnicode=true&characterEncoding=UTF-8", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/restaurante", "root", "1234");
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost/lojadebebidas?useUnicode=true&characterEncoding=UTF-8", "root", "");
 
         } catch (SQLException e) {

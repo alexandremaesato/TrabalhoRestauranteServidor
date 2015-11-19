@@ -11,12 +11,12 @@ import java.io.Serializable;
  *
  * @author alexandre
  */
-class Produto implements Serializable{
+public class Produto implements Serializable{
     
-   private int produtoid;
+    private int produtoid;
     private String nome;
     private Double valor;
-    private String foto;
+    private String imagem;
     
 
     public int getProdutoid() {
@@ -43,11 +43,11 @@ class Produto implements Serializable{
         this.valor = valor;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }
