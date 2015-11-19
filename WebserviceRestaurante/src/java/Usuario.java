@@ -6,16 +6,12 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Usuario;
 import models.UsuarioDao;
 import net.sf.json.JSONObject;
 
@@ -23,8 +19,8 @@ import net.sf.json.JSONObject;
  *
  * @author alexandre
  */
-@WebServlet(urlPatterns = {"/UserValidator"})
-public class UserValidator extends HttpServlet {
+@WebServlet(urlPatterns = {"/Usuario"})
+public class Usuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,30 +32,20 @@ public class UserValidator extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-            /* TODO output your page here. You may use following sample code. */
-             //out.print("<HTML><HEAD><TITLE>Servlet</TITLE></ HEAD><BODY>TESTE</BODY></HTML>");
-             HashMap<String, String> hm = new HashMap<String, String>();
-             HashMap<String, Usuario> userHm = new HashMap<String, Usuario>();
-             String usuario = request.getParameter("usuario");
-             String senha = request.getParameter("senha");
-             String msg;
-             
-             UsuarioDao usuarioDao = new UsuarioDao();
-             Usuario user = new Usuario();
-             user = usuarioDao.login(usuario, senha);
-             if (user != null){
-                userHm.put("usuario", user);
-             }else{
-             }
-             JSONObject json = JSONObject.fromObject(userHm);
-             response.setContentType("application/json");
-             try (PrintWriter out = response.getWriter()) {
-                 out.print(json);
-                 out.flush();
-        }
+//        HashMap<String, String> hm = new HashMap<String, String>();
+//        UsuarioDao usuarioDao = new UsuarioDao();
+//        Usuario usuario = new Usuario();
+//        
+//        
+//        
+//        hm.put("message", msg);
+//        JSONObject json = JSONObject.fromObject(hm);
+//        try (PrintWriter out = response.getWriter()) {
+//             out.print(json);
+//             out.flush();
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,11 +60,7 @@ public class UserValidator extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserValidator.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -92,11 +74,7 @@ public class UserValidator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserValidator.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
