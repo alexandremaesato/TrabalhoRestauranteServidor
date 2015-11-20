@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author alexandre
  */
 public class Usuario implements Serializable{
-    private long idUsuario;
+    private int idUsuario;
     private String nome;
     private String senha;
 
@@ -20,7 +20,7 @@ public class Usuario implements Serializable{
         return idUsuario;
     }
 
-    public void setIdUsuario(long idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 

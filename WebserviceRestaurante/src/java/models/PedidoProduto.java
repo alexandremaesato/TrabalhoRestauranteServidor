@@ -17,6 +17,7 @@ public class PedidoProduto implements Serializable{
     private int pedidoid;
     private int produtoid;
     private int quantidade;
+    
 
     public int getPedido_produto_id() {
         return pedido_produto_id;
@@ -49,6 +50,6 @@ public class PedidoProduto implements Serializable{
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
+     
 }
