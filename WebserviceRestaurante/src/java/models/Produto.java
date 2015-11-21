@@ -17,6 +17,7 @@ public class Produto implements Serializable{
     private String nome;
     private Double valor;
     private String imagem;
+    private String categoria;
     
 
     public int getProdutoid() {
@@ -50,4 +51,13 @@ public class Produto implements Serializable{
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
 }

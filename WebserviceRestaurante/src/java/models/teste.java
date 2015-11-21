@@ -6,6 +6,8 @@
 package models;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -13,9 +15,20 @@ import java.sql.SQLException;
  */
 public class teste {
     public static void main(String args[]) throws SQLException{
-        UsuarioDao usuarioDao = new UsuarioDao();
-        Usuario u = usuarioDao.getUsuario(1);
-        System.out.println(u.getNome());
+//        UsuarioDao usuarioDao = new UsuarioDao();
+//        Usuario u = usuarioDao.getUsuario(1);
+//        System.out.println(u.getNome());
+        
+         HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
+                    int id = 2;
+                    PedidoDAO pedidoDao = new PedidoDAO();
+                    Pedido pedido = new Pedido();
+                    
+                    
+                    pedido = pedidoDao.getPedido(id);
+                    if (pedido.hasProduto()){
+                       produtosHM.put("produtos", pedido.getProdutos());
+                    }
         
     }
     
