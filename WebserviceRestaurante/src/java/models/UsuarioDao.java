@@ -22,7 +22,7 @@ public class UsuarioDao {
     ResultSet resultSet = null;
     
     public Usuario getUsuario(int idUsuario) throws SQLException {
-        String query = "SELECT * FROM Usuario WHERE idUsuario=?";
+        String query = "SELECT * FROM usuario WHERE usuarioid=?";
 
         try {
             con = ConnectionFactory.getConnection();
@@ -45,7 +45,7 @@ public class UsuarioDao {
     }
     
     public Usuario login(String usuario, String senha) throws SQLException {
-        String query = "SELECT * FROM Usuario WHERE usuario=? and senha=?";
+        String query = "SELECT * FROM usuario WHERE nome=? and senha=?";
 
         try {
             con = ConnectionFactory.getConnection();
@@ -57,7 +57,7 @@ public class UsuarioDao {
             while (resultSet.next()) { 
                 Usuario user = new Usuario();
                 Pedido pedido = new Pedido();
-                user.setIdUsuario(resultSet.getInt("idUsuario"));
+                user.setIdUsuario(resultSet.getInt("usuarioid"));
                 user.setNome(resultSet.getString("nome"));
                 return user;
             }

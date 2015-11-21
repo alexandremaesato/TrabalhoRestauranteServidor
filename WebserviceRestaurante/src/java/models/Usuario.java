@@ -12,16 +12,16 @@ import java.io.Serializable;
  * @author alexandre
  */
 public class Usuario implements Serializable{
-    private long idUsuario;
+    private long usuarioid;
     private String nome;
     private String senha;
 
     public long getIdUsuario() {
-        return idUsuario;
+        return usuarioid;
     }
 
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(long usuarioid) {
+        this.usuarioid = usuarioid;
     }
 
     public String getNome() {

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.ProdutoDAO;
 import models.Usuario;
 import models.Produto;
+import models.ProdutosList;
 import models.UsuarioDao;
 import net.sf.json.JSONObject;
 
@@ -43,6 +44,7 @@ public class UserValidator extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        
         
             String opcao = request.getParameter("opcao");
         
@@ -67,15 +69,17 @@ public class UserValidator extends HttpServlet {
                     try (PrintWriter out = response.getWriter()) {
                         out.print(json);
                         out.flush();
-                }
+                    }
                 break;
                     
                 case "listaProdutos":
                     
-                    HashMap<String, List<Produto>> hmp = new HashMap<String, List<Produto>>();
+                    HashMap<String, ProdutosList> hmp = new HashMap<String, ProdutosList>();
                     ProdutoDAO produtodao = new ProdutoDAO();
                     List<Produto> produtos = produtodao.getProdutos();
-                    hmp.put("produtos", produtos);
+                    ProdutosList pds = new ProdutosList();
+                    pds.setProdutos(produtos);
+                    hmp.put("produtos", pds);
                     JSONObject jsonp = JSONObject.fromObject(hmp);
                     response.setContentType("application/json");
                     try (PrintWriter out = response.getWriter()) {
