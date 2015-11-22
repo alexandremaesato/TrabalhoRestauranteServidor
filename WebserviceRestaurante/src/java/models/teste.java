@@ -19,16 +19,20 @@ public class teste {
 //        Usuario u = usuarioDao.getUsuario(1);
 //        System.out.println(u.getNome());
         
-         HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
-                    int id = 2;
+        PedidoDAO p = new PedidoDAO();
+        
+        
+//        HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
+//                    int id = 2;
                     PedidoDAO pedidoDao = new PedidoDAO();
                     Pedido pedido = new Pedido();
-                    
-                    
-                    pedido = pedidoDao.getPedido(id);
-                    if (pedido.hasProduto()){
-                       produtosHM.put("produtos", pedido.getProdutos());
-                    }
+//                    
+//                    
+                    pedido = pedidoDao.getPedido(1);
+                    System.out.println(pedido.getProdutos().get(0).getNome());
+//                    if (pedido.hasProduto()){
+//                       produtosHM.put("produtos", pedido.getProdutos());
+//                    }
         
     }
     

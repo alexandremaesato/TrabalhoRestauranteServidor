@@ -22,6 +22,7 @@ import models.Pedido;
 import models.PedidoDAO;
 import models.Produto;
 import models.ProdutoDAO;
+import models.ProdutosList;
 import models.Usuario;
 import models.UsuarioDao;
 import net.sf.json.JSONObject;
@@ -45,25 +46,48 @@ public class PedidoControle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+       
+        int id;
+        String status;
+        String forma;
+        PedidoDAO pedidoDao;
+        UsuarioDao usuarioDao;
+        Pedido pedido;
+        JSONObject json;
         
          String opcao = request.getParameter("opcao");
             switch(opcao){
                 case "getPedido":
-                    HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    PedidoDAO pedidoDao = new PedidoDAO();
-                    Pedido pedido = new Pedido();
+                    HashMap<String, ProdutosList> produtosHM = new HashMap<String, ProdutosList>();
+                    id = Integer.parseInt(request.getParameter("id"));
+                    pedidoDao = new PedidoDAO();
+                    pedido = new Pedido();
                     pedido = pedidoDao.getPedido(id); 
                     if (pedido.hasProduto()){
-                       produtosHM.put("produtos", pedido.getProdutos());
+                        ProdutosList produtosList = new ProdutosList();
+                        produtosList.setProdutos(pedido.getProdutos());
+                       produtosHM.put("produtos", produtosList);
                     }else{
                     }
-                    JSONObject json = JSONObject.fromObject(produtosHM);
+                    json = JSONObject.fromObject(produtosHM);
                     response.setContentType("application/json");
                     try (PrintWriter out = response.getWriter()) {
                         out.print(json);
                         out.flush();
                 }
+                break;
+                
+                case "pagar":
+                    HashMap<String, String> pedidoHM = new HashMap<String, String>();
+                    id = Integer.parseInt(request.getParameter("id"));
+                    status = request.getParameter("status");
+                    forma = request.getParameter("forma");
+                    pedidoDao = new PedidoDAO();
+                    Pedido p = new Pedido();
+                    
+                    p = pedidoDao.getPedido(id);
+                    pedidoDao.setPagamento(p.getPedidoid(), forma);
+                    pedidoDao.setNovoPedido(id);
                 break;
             }
         

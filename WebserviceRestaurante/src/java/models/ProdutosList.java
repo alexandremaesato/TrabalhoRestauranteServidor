@@ -22,5 +22,9 @@ public class ProdutosList {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
+
+    public void getProdutos(ProdutosList produtosList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
