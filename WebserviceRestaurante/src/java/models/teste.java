@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,17 +20,22 @@ public class teste {
 //        Usuario u = usuarioDao.getUsuario(1);
 //        System.out.println(u.getNome());
         
-         HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
-                    int id = 2;
-                    PedidoDAO pedidoDao = new PedidoDAO();
-                    Pedido pedido = new Pedido();
+//         HashMap<String, List<Produto>> produtosHM = new HashMap<String, List<Produto>>();
+//                    int id = 2;
+//                    PedidoDAO pedidoDao = new PedidoDAO();
+//                    Pedido pedido = new Pedido();
+//                    
+//                    
+//                    pedido = pedidoDao.getPedido(id);
+//                    if (pedido.hasProduto()){
+//                       produtosHM.put("produtos", pedido.getProdutos());
+//                    }
+        UsuarioDao usuarioDao = new UsuarioDao();
+                    Usuario user = new Usuario();
+                    user = usuarioDao.login("guilherme", "123");
+                    System.out.println(user.getNome());
+                    System.out.println(user.getIdUsuario());
                     
-                    
-                    pedido = pedidoDao.getPedido(id);
-                    if (pedido.hasProduto()){
-                       produtosHM.put("produtos", pedido.getProdutos());
-                    }
-        
     }
     
 }
