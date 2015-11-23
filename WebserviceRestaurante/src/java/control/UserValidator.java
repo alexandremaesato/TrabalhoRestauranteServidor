@@ -57,13 +57,16 @@ public class UserValidator extends HttpServlet {
                     String usuario = request.getParameter("usuario");
                     String senha = request.getParameter("senha");
                     String msg;
-
+                    
                     UsuarioDao usuarioDao = new UsuarioDao();
                     Usuario user = new Usuario();
+                    
                     user = usuarioDao.login(usuario, senha);
                     if (user != null){
                        userHm.put("usuario", user);
                     }else{
+                        
+                        userHm.put("usuario", user);
                     }
                     JSONObject json = JSONObject.fromObject(userHm);
                     response.setContentType("application/json");

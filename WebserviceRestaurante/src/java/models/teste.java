@@ -18,7 +18,8 @@ public class teste {
 //        UsuarioDao usuarioDao = new UsuarioDao();
 //        Usuario u = usuarioDao.getUsuario(1);
 //        System.out.println(u.getNome());
-        
+        Usuario u = new Usuario();
+        u.setNome("erro");
         PedidoDAO p = new PedidoDAO();
         
         
