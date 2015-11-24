@@ -54,8 +54,7 @@ public class UserValidator extends HttpServlet {
             String opcao = request.getParameter("opcao");
         
             switch(opcao){
-                case "login":
-                    
+                case "login":   
                     HashMap<String, String> hm = new HashMap<String, String>();
                     HashMap<String, Usuario> userHm = new HashMap<String, Usuario>();
                     String usuario = request.getParameter("usuario");

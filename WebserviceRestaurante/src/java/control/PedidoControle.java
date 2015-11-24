@@ -87,7 +87,7 @@ public class PedidoControle extends HttpServlet {
                     
                     p = pedidoDao.getPedido(id);
                     pedidoDao.setPagamento(p.getPedidoid(), forma);
-                    pedidoDao.setNovoPedido(id);
+                    pedidoDao.zeraPedido(p.getPedidoid());
                 break;
             }
         
