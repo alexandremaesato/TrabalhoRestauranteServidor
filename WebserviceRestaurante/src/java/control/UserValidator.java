@@ -18,6 +18,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Pedido;
+import models.PedidoDAO;
+import models.PedidoProduto;
+import models.PedidoProdutoDao;
 import models.ProdutoDAO;
 import models.Usuario;
 import models.Produto;
@@ -57,13 +61,13 @@ public class UserValidator extends HttpServlet {
                     String usuario = request.getParameter("usuario");
                     String senha = request.getParameter("senha");
                     String msg;
-
+                    
                     UsuarioDao usuarioDao = new UsuarioDao();
                     Usuario user = new Usuario();
+                    
                     user = usuarioDao.login(usuario, senha);
-                    if (user != null){
-                        userHm.put("usuario", user);
-                    }
+                    userHm.put("usuario", user);
+                    
                     
                     JSONObject json = JSONObject.fromObject(userHm);
                     response.setContentType("application/json");
@@ -87,6 +91,87 @@ public class UserValidator extends HttpServlet {
                         out.print(jsonp);
                         out.flush();
                    }
+                    break;
+                   
+                case "inserePedido":
+                    HashMap<String, String> hmid = new HashMap<String, String>();
+                    
+                /*pegar o usuarioid, produtoid, quantidade*/
+                   String usuarioid     = request.getParameter("usuario");                  
+                   String produtoid     = request.getParameter("produto");                  
+                   String quantidade    = request.getParameter("quantidade");
+                   String pedido        = request.getParameter("pedido");
+                   int userid           = Integer.parseInt(usuarioid);
+                   int productid        = Integer.parseInt(produtoid);
+                   int quantity         = Integer.parseInt(quantidade);
+                   int pedidoid         = Integer.parseInt(pedido);
+                   
+                   
+                   if(pedidoid != 0){                                          
+                        pedidoid = Integer.parseInt(pedido);
+                        
+                        PedidoProduto pedpro = new PedidoProduto();
+                        pedpro.setPedidoid(pedidoid);
+                        pedpro.setProdutoid(productid);
+                        pedpro.setQuantidade(quantity);                        
+                        PedidoProdutoDao pedprodao = new PedidoProdutoDao();
+                        pedprodao.inserePedidoProduto(pedpro);
+                     //   out2.print(pedidoid);
+                        
+                        hmid.put("pedidoid", pedido);
+                        JSONObject jsonid = JSONObject.fromObject(hmid);
+                        response.setContentType("application/json");
+                         try (PrintWriter out = response.getWriter()) {
+                            out.print(jsonid);
+                            out.flush();
+                        }
+                   }
+                   else{                                                              
+                        Pedido ped = new Pedido();
+                        ped.setUsuarioid(userid);
+                        ped.setStatus("aguardando");
+                        PedidoDAO peddao = new PedidoDAO();                       
+                        pedidoid = peddao.inserePedido(ped);
+                        
+                        PedidoProduto pedpro = new PedidoProduto();
+                        pedpro.setPedidoid(pedidoid);
+                        pedpro.setProdutoid(productid);
+                        pedpro.setQuantidade(quantity);                        
+                        PedidoProdutoDao pedprodao = new PedidoProdutoDao();
+                        pedprodao.inserePedidoProduto(pedpro);
+                       // out2.print(pedidoid);
+                        
+                        hmid.put("pedidoid", Integer.toString(pedidoid));
+                        JSONObject jsonid = JSONObject.fromObject(hmid);
+                        response.setContentType("application/json");
+                         try (PrintWriter out = response.getWriter()) {
+                            out.print(jsonid);
+                            out.flush();
+                        }
+                   }
+                    break;
+                
+                case "buscaPedido":
+                    
+                    HashMap<String, Pedido> hmpedido = new HashMap<String, Pedido>();
+                    PedidoDAO pdao = new PedidoDAO();
+                    Pedido pd = new Pedido();
+                    String iduser = request.getParameter("usuarioid");
+                    pd = pdao.getNovoPedido(Integer.parseInt(iduser));
+                    
+                    if(pd.getPedidoid() == 0){
+                        pdao.setNovoPedido(Integer.parseInt(iduser));
+                        pd = pdao.getNovoPedido(Integer.parseInt(iduser));
+                    } 
+                    
+                    hmpedido.put("pedido", pd);
+                    JSONObject jsonbp = JSONObject.fromObject(hmpedido);
+                    response.setContentType("application/json");
+                     try (PrintWriter out = response.getWriter()) {
+                        out.print(jsonbp);
+                        out.flush();
+                    }
+                     
                     break;
             }
         

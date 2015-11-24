@@ -31,10 +31,10 @@ public class teste {
 //                       produtosHM.put("produtos", pedido.getProdutos());
 //                    }
         UsuarioDao usuarioDao = new UsuarioDao();
-                    Usuario user = new Usuario();
-                    user = usuarioDao.login("guilherme", "123");
-                    System.out.println(user.getNome());
-                    System.out.println(user.getIdUsuario());
+        PedidoDAO pdao = new PedidoDAO();            
+        Pedido pd = pdao.getPedido(Integer.parseInt("1"));
+                    System.out.println(pd.getUsuarioid());
+                    System.out.println(pd.getPedidoid());
                     
     }
     

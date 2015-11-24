@@ -33,7 +33,7 @@ public class UsuarioDao {
             while (resultSet.next()) { 
                 Usuario usuario = new Usuario();
                 Pedido pedido = new Pedido();
-                usuario.setIdUsuario(resultSet.getInt("idUsuario"));
+                usuario.setIdUsuario(resultSet.getInt("usuarioid"));
                 usuario.setNome(resultSet.getString("nome"));
                 return usuario;
             }

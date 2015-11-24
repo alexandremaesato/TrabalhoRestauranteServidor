@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class PedidoDAO {
     ResultSet resultSet    = null;
     
     public Pedido getPedido(int idUsuario) throws SQLException{
-        String query = "SELECT * FROM Pedido WHERE idUsuario = ?";
+        String query = "SELECT * FROM pedido WHERE usuarioid = ? and status = 'aberto'";
         
         try {
             con = ConnectionFactory.getConnection();
@@ -35,10 +36,10 @@ public class PedidoDAO {
             ArrayList<Produto> produtos = new ArrayList<Produto>();
             
             while (resultSet.next()) { 
-                pedido.setPedidoid(resultSet.getInt("idPedido"));
+                pedido.setPedidoid(resultSet.getInt("pedidoid"));
                 pedido.setStatus(resultSet.getString("status"));
-                pedido.setUsuarioid(resultSet.getInt("idUsuario"));
-                pedido.setFormapgto(resultSet.getString("formaPagamento"));
+                pedido.setUsuarioid(resultSet.getInt("usuarioid"));
+                pedido.setFormapgto(resultSet.getString("forma_pgto"));
             }
             pedido.setProdutos(getProdutos(pedido.getPedidoid()));
             return pedido;
@@ -48,26 +49,109 @@ public class PedidoDAO {
         }
     }
     
-    public ArrayList<Produto> getProdutos(int idPedido) throws SQLException{
-        String query = "SELECT * FROM Produto, Produtos_pedido WHERE idPedido = ?";
+    public List<Produto> getProdutos(int idPedido) throws SQLException{
+        String query = "SELECT * FROM Produto, Produtos_pedido WHERE pedidoid = ? and Produto.produtoid = Produtos_pedido.produtoid";
         
         try {
             con = ConnectionFactory.getConnection();
             ptmt = con.prepareStatement(query);
             ptmt.setInt(1, idPedido);
             resultSet = ptmt.executeQuery();
-            ArrayList<Produto> produtos = new ArrayList<Produto>();
+            List<Produto> produtos = new ArrayList<Produto>();
             
             while (resultSet.next()) { 
                 Produto produto = new Produto();
-                produto.setProdutoid(resultSet.getInt("idPedido"));
+                produto.setProdutoid(resultSet.getInt("pedidoid"));
                 produto.setNome(resultSet.getString("nome"));
-                produto.setCategoria(resultSet.getString("categoria"));
-                produto.setImagem(resultSet.getString("foto"));
+                //produto.setCategoria(resultSet.getString("categoria"));
+                produto.setImagem(resultSet.getString("imagem"));
                 produto.setValor(resultSet.getDouble("valor"));
                 produtos.add(produto);
             }
             return produtos;
+            
+        } finally {
+            ptmt.close();
+        }
+    }
+
+    public void setPagamento(int pedidoid, String formaPagamento) throws SQLException{
+        String query = "UPDATE pedido set status=?, forma_pgto=? where pedidoid=?";
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setString(1, "pago");
+            ptmt.setString(2, formaPagamento);
+            ptmt.setInt(3, pedidoid);
+            ptmt.executeUpdate();
+            
+            
+        } finally {
+            ptmt.close();
+        }
+    }
+
+    public void setNovoPedido(int id) throws SQLException{
+        String query = "INSERT INTO pedido(usuarioid,status) values(?,?)";
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setInt(1, id);
+            ptmt.setString(2, "aberto");
+            
+            ptmt.executeUpdate();
+            
+            
+            
+        } finally {
+            ptmt.close();
+        }
+    }
+    
+    public int inserePedido(Pedido ped) throws SQLException {
+       String query = "insert into pedido (usuarioid, status) values (?, ?);";
+       int chavegerada = 0;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+             
+            ptmt.setInt(1, ped.getUsuarioid());
+            ptmt.setString(2, ped.getStatus());
+            ptmt.executeUpdate();
+         
+           resultSet = ptmt.getGeneratedKeys();
+           resultSet.next();
+           chavegerada = resultSet.getInt(1);
+           
+        } finally {
+            ptmt.close();
+        }
+        
+       return chavegerada;
+    }
+    
+    public Pedido getNovoPedido(int userid) throws SQLException{
+        String query = "SELECT * FROM pedido WHERE usuarioid = ? and status = 'aberto'";
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setInt(1, userid);
+            resultSet = ptmt.executeQuery();
+            Pedido pedido = new Pedido();
+            ProdutoDAO produtoDao = new ProdutoDAO();
+            ArrayList<Produto> produtos = new ArrayList<Produto>();
+            
+            while (resultSet.next()) { 
+                pedido.setPedidoid(resultSet.getInt("pedidoid"));
+                pedido.setStatus(resultSet.getString("status"));
+                pedido.setUsuarioid(resultSet.getInt("usuarioid"));
+                pedido.setFormapgto(resultSet.getString("forma_pgto"));
+            }
+            return pedido;
             
         } finally {
             ptmt.close();

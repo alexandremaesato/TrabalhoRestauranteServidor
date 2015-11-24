@@ -43,4 +43,21 @@ public class PedidoProdutoDao {
             ptmt.close();
         }
     }
+    
+    public void inserePedidoProduto(PedidoProduto pedpro) throws SQLException {
+       String query = "insert into produtos_pedido (pedidoid, produtoid, quantidade) values (?, ?, ?);";
+       int chavegerada = 0;
+
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+             
+            ptmt.setInt(1, pedpro.getPedidoid());
+            ptmt.setInt(2, pedpro.getProdutoid());
+            ptmt.setInt(3, pedpro.getQuantidade());
+            ptmt.executeUpdate();         
+        } finally {
+            ptmt.close();
+        }
+    }
 }
