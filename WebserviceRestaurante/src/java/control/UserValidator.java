@@ -50,8 +50,7 @@ public class UserValidator extends HttpServlet {
             String opcao = request.getParameter("opcao");
         
             switch(opcao){
-                case "login":
-                    
+                case "login":   
                     HashMap<String, String> hm = new HashMap<String, String>();
                     HashMap<String, Usuario> userHm = new HashMap<String, Usuario>();
                     String usuario = request.getParameter("usuario");
@@ -62,12 +61,11 @@ public class UserValidator extends HttpServlet {
                     Usuario user = new Usuario();
                     
                     user = usuarioDao.login(usuario, senha);
-                    if (user != null){
-                       userHm.put("usuario", user);
-                    }else{
-                        
-                        userHm.put("usuario", user);
-                    }
+                   
+                    userHm.put("usuario", user);
+                                       
+                     
+                    
                     JSONObject json = JSONObject.fromObject(userHm);
                     response.setContentType("application/json");
                     try (PrintWriter out = response.getWriter()) {

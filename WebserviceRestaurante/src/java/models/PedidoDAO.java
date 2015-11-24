@@ -109,4 +109,32 @@ public class PedidoDAO {
         }
     }
     
+     public void zeraPedido(int pedidoid) throws SQLException{
+        String query = "DELETE FROM produtos_pedido WHERE pedidoid=?";
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setInt(1, pedidoid);
+            ptmt.executeUpdate();
+        } finally {
+            ptmt.close();
+        }
+     }
+        public void zeraTabela(int pedidoid) throws SQLException{
+        String query = "UPDATE pedido SET status=?,forma_pgto=? WHERE pedidoid=?";
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setString(1, "aberto");
+            ptmt.setString(2, "");
+            ptmt.setInt(3, pedidoid);
+            ptmt.executeUpdate();
+        } finally {
+            ptmt.close();
+        }
+       
+        
+    }
+    
+   
 }
