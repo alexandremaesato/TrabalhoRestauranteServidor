@@ -86,6 +86,8 @@ public class UserValidator extends HttpServlet {
                     hmp.put("produtos", pds);
                     JSONObject jsonp = JSONObject.fromObject(hmp);
                     response.setContentType("application/json");
+                    PedidoDAO pedidoDao = new PedidoDAO();
+                    pedidoDao.zeraTabela(Integer.parseInt(request.getParameter("pedidoid")));
                     try (PrintWriter out = response.getWriter()) {
                         out.print(jsonp);
                         out.flush();
