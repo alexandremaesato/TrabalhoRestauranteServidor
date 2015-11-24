@@ -41,13 +41,39 @@ public class PedidoDAO {
                 pedido.setUsuarioid(resultSet.getInt("usuarioid"));
                 pedido.setFormapgto(resultSet.getString("forma_pgto"));
             }
-            pedido.setProdutos(getProdutos(pedido.getPedidoid()));
+            pedido.setPedidoProdutos(getPedidoProdutos(pedido.getPedidoid()));
+            //pedido.setProdutos(getProdutos(pedido.getPedidoid()));
             return pedido;
             
         } finally {
             ptmt.close();
         }
     }
+    public ArrayList<PedidoProduto> getPedidoProdutos(int idPedido) throws SQLException{
+        String query = "SELECT * FROM produtos_pedido WHERE pedidoid = ?";
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setInt(1, idPedido);
+            resultSet = ptmt.executeQuery();
+            ArrayList<PedidoProduto> pedidoProdutos = new ArrayList<PedidoProduto>();
+            ProdutoDAO pDao = new ProdutoDAO();
+            while (resultSet.next()) {
+                
+                PedidoProduto pedidoProduto = new PedidoProduto();
+                pedidoProduto.setProduto(pDao.getProduto(resultSet.getInt("produtoid")));
+                pedidoProduto.setQuantidade(resultSet.getInt("quantidade"));
+                pedidoProdutos.add(pedidoProduto);
+            }
+            return pedidoProdutos;
+            
+        } finally {
+            ptmt.close();
+        }
+    }
+    
+    
     
     public List<Produto> getProdutos(int idPedido) throws SQLException{
         String query = "SELECT * FROM Produto, Produtos_pedido WHERE pedidoid = ? and Produto.produtoid = Produtos_pedido.produtoid";

@@ -52,12 +52,27 @@ public class PedidoControle extends HttpServlet {
         String forma;
         PedidoDAO pedidoDao;
         UsuarioDao usuarioDao;
-        Pedido pedido;
+        Pedido pedido= new Pedido();
         JSONObject json;
         
          String opcao = request.getParameter("opcao");
             switch(opcao){
                 case "getPedido":
+                    HashMap<String, Pedido> produtosHM = new HashMap<String, Pedido>();
+                    id = Integer.parseInt(request.getParameter("id"));
+                    pedidoDao = new PedidoDAO();
+                    //pedido 
+                    pedido = pedidoDao.getPedido(id); 
+                    
+                    produtosHM.put("pedido", pedido);
+                    
+                    json = JSONObject.fromObject(produtosHM);
+                    response.setContentType("application/json");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print(json);
+                        out.flush();
+                }
+                    /*
                     HashMap<String, ProdutosList> produtosHM = new HashMap<String, ProdutosList>();
                     id = Integer.parseInt(request.getParameter("id"));
                     pedidoDao = new PedidoDAO();
@@ -75,6 +90,7 @@ public class PedidoControle extends HttpServlet {
                         out.print(json);
                         out.flush();
                 }
+                    */
                 break;
                 
                 case "pagar":

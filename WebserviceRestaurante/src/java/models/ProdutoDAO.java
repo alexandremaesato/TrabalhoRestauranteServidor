@@ -72,4 +72,31 @@ public class ProdutoDAO {
         }
     }
     
+    public Produto getProduto(int id) throws SQLException{
+        String query = "SELECT * FROM produto WHERE produtoid = ?";
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            ptmt = con.prepareStatement(query);
+            ptmt.setInt(1, id);
+            resultSet = ptmt.executeQuery();
+            
+            Produto produto = new Produto();
+            while (resultSet.next()) { 
+                
+                produto.setProdutoid(resultSet.getInt("produtoid"));
+                produto.setNome(resultSet.getString("nome"));
+                produto.setValor(resultSet.getDouble("valor"));
+                produto.setImagem(resultSet.getString("imagem"));
+                //produtos.add(produto);
+            }
+            return produto;
+            
+        } finally {
+            ptmt.close();
+        }
+    }
+    
+    
+    
 }

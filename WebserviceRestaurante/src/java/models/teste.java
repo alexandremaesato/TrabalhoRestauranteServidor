@@ -7,6 +7,7 @@ package models;
 
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,12 +31,18 @@ public class teste {
 //                    if (pedido.hasProduto()){
 //                       produtosHM.put("produtos", pedido.getProdutos());
 //                    }
-        UsuarioDao usuarioDao = new UsuarioDao();
-        PedidoDAO pdao = new PedidoDAO();            
-        Pedido pd = pdao.getPedido(Integer.parseInt("1"));
-                    System.out.println(pd.getUsuarioid());
-                    System.out.println(pd.getPedidoid());
-                    
-    }
+//        UsuarioDao usuarioDao = new UsuarioDao();
+//        PedidoDAO pdao = new PedidoDAO();            
+//        Pedido pd = pdao.getPedido(Integer.parseInt("1"));
+//                    System.out.println(pd.getUsuarioid());
+//                    System.out.println(pd.getPedidoid());
+//                    
+//    }
+        PedidoDAO pDao = new PedidoDAO();
+        ArrayList<PedidoProduto> pd = new ArrayList<PedidoProduto>();
+        pd = pDao.getPedidoProdutos(1);
+        
+        System.out.println(pd.get(0).getProduto().getNome());
     
+}
 }

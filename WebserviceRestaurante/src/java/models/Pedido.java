@@ -16,7 +16,7 @@ public class Pedido {
     private int usuarioid;
     private String status;
     private String formapgto;
-    private List<Produto> produtos;
+    private List<PedidoProduto> pedidoProdutos;
 
     public int getUsuarioid() {
         return usuarioid;
@@ -50,15 +50,12 @@ public class Pedido {
         this.formapgto = formapgto;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<PedidoProduto> getPedidoProdutos() {
+        return pedidoProdutos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {
+        this.pedidoProdutos = pedidoProdutos;
     }
-    
-    public boolean hasProduto(){
-        return !produtos.isEmpty();
-    }
+
 }
